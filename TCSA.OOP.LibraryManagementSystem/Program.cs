@@ -3,6 +3,6 @@ using TCSA.OOP.LibraryManagementSystem;
 
 
 UserInterface userInterface = new();
-userInterface.Menu();
+userInterface.MainMenu();
 
 

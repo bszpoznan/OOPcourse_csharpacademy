@@ -4,10 +4,17 @@ namespace TCSA.OOP.LibraryManagementSystem
     {
         internal enum MenuOption
         {
-            ViewBooks,
-            AddBook,
-            DeleteBook,
+            ViewItems,
+            AddItem,
+            DeleteItem,
             Exit
+        }
+
+        internal enum ItemType
+        {
+            Book,
+            Magazine,
+            Newspaper
         }
     }
 }
