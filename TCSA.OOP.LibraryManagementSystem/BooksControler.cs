@@ -18,14 +18,16 @@ namespace TCSA.OOP.LibraryManagementSystem
 
         internal void AddBook()
         {
-            var title = AnsiConsole.Ask<string>("Enter the [green]title[/] of the book to add:");
-            if (MockDatabase.Books.Contains(title))
+            var title = AnsiConsole.Ask<string>("Enter the [green]title[/] of the book to add:" );
+            var pages = AnsiConsole.Ask<int>("Enter the [green]number of pages[/] in the book: ");
+            if (MockDatabase.Books.Exists(b => b.Name.Equals(title, StringComparison.OrdinalIgnoreCase) ))
             {
                 AnsiConsole.MarkupLine("[red]This book already exists.[/]");
             }
             else
             {
-                books.Add(title);
+                var book = new Book(title, pages);
+                MockDatabase.Books.Add(book);
                 AnsiConsole.MarkupLine("[green]Book added successfully.[/]");
             }
             AnsiConsole.MarkupLine("Press any key to continue.");
@@ -34,19 +36,20 @@ namespace TCSA.OOP.LibraryManagementSystem
 
         internal void DeleteBook()
         {
-            if (books.Count == 0)
+            if (MockDatabase.Books.Count == 0)
             {
                 AnsiConsole.MarkupLine("[red]No books available to delete.[/]");
                 Console.ReadKey();
                 return;
             }
             var bookToDelete = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
+                new SelectionPrompt<Book>()
                 .Title("Select a [red]book[/] to delete:")
-                .AddChoices(books)
+                .UseConverter(b => $"{b.Name}")
+                .AddChoices(MockDatabase.Books)
             );
 
-            if (books.Remove(bookToDelete))
+            if (MockDatabase.Books.Remove(bookToDelete))
             {
                 AnsiConsole.MarkupLine("[red]Book deleted successfully![/]");
             }
