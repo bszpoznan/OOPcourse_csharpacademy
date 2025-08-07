@@ -2,24 +2,24 @@ using Spectre.Console;
 
 namespace TCSA.OOP.LibraryManagementSystem
 {
-    internal static class BooksControler
+    internal class BooksController
     {
-        private static List<string> books = new();
-        internal static void ViewBooks()
+        
+        internal void ViewBooks()
         {
             AnsiConsole.MarkupLine("[yellow]List of Books:[/]");
-            foreach (var book in books)
+            foreach (var book in MockDatabase.Books)
             {
-                AnsiConsole.MarkupLine($"- [cyan]{book}[/]");
+                AnsiConsole.MarkupLine($"- [cyan]{book.Name}[/] - [yellow]{book.Pages} pages[/]");
             }
             AnsiConsole.MarkupLine("Press any key to continue");
             Console.ReadKey();
         }
 
-        internal static void AddBook()
+        internal void AddBook()
         {
             var title = AnsiConsole.Ask<string>("Enter the [green]title[/] of the book to add:");
-            if (books.Contains(title))
+            if (MockDatabase.Books.Contains(title))
             {
                 AnsiConsole.MarkupLine("[red]This book already exists.[/]");
             }
@@ -32,7 +32,7 @@ namespace TCSA.OOP.LibraryManagementSystem
             Console.ReadKey();
         }
 
-        internal static void DeleteBook()
+        internal void DeleteBook()
         {
             if (books.Count == 0)
             {
